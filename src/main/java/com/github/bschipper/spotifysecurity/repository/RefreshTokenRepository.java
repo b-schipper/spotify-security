@@ -1,0 +1,17 @@
+package com.github.bschipper.spotifysecurity.repository;
+
+import com.github.bschipper.spotifysecurity.models.RefreshToken;
+import com.github.bschipper.spotifysecurity.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
+    Optional<RefreshToken> findByToken(String token);
+
+    @Modifying
+    void deleteByUser(User user);
+}
