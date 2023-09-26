@@ -4,16 +4,16 @@ import com.github.bschipper.spotifysecurity.exception.TokenRefreshException;
 import com.github.bschipper.spotifysecurity.models.RefreshToken;
 import com.github.bschipper.spotifysecurity.models.Role;
 import com.github.bschipper.spotifysecurity.models.User;
-import com.github.bschipper.spotifysecurity.payload.request.TokenRefreshRequest;
 import com.github.bschipper.spotifysecurity.payload.request.SigninRequest;
 import com.github.bschipper.spotifysecurity.payload.request.SignupRequest;
+import com.github.bschipper.spotifysecurity.payload.request.TokenRefreshRequest;
 import com.github.bschipper.spotifysecurity.payload.response.JwtResponse;
 import com.github.bschipper.spotifysecurity.payload.response.MessageResponse;
 import com.github.bschipper.spotifysecurity.payload.response.TokenRefreshResponse;
 import com.github.bschipper.spotifysecurity.repository.UserRepository;
-import com.github.bschipper.spotifysecurity.security.RefreshTokenService;
-import com.github.bschipper.spotifysecurity.security.TokenProvider;
 import com.github.bschipper.spotifysecurity.security.UserPrincipal;
+import com.github.bschipper.spotifysecurity.security.service.AuthTokenService;
+import com.github.bschipper.spotifysecurity.security.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,7 +34,7 @@ import javax.validation.Valid;
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder encoder;
-    private final TokenProvider jwtProvider;
+    private final AuthTokenService jwtProvider;
     private final RefreshTokenService refreshTokenService;
     private final UserRepository userRepository;
 
