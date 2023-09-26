@@ -1,7 +1,7 @@
 package com.github.bschipper.spotifysecurity.config;
 
 
-import com.github.bschipper.spotifysecurity.security.CustomUserDetailsService;
+import com.github.bschipper.spotifysecurity.security.service.CustomUserDetailsService;
 import com.github.bschipper.spotifysecurity.security.RestAuthenticationEntryPoint;
 import com.github.bschipper.spotifysecurity.security.TokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.github.bschipper.spotifysecurity.security;
+package com.github.bschipper.spotifysecurity.security.service;
 
 import com.github.bschipper.spotifysecurity.exception.TokenRefreshException;
 import com.github.bschipper.spotifysecurity.models.RefreshToken;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class RefreshTokenService {
+public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Value("120000")
     private Long refreshTokenDurationMs;
 

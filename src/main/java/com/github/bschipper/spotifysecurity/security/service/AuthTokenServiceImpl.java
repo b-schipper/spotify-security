@@ -1,4 +1,4 @@
-package com.github.bschipper.spotifysecurity.security;
+package com.github.bschipper.spotifysecurity.security.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -16,20 +16,23 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class TokenProvider {
-    private static final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
+public class AuthTokenServiceImpl implements AuthTokenService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthTokenServiceImpl.class);
 
     @Value("413F4428472B4B6250655368566D5970337336763979244226452948404D6351")
     private String jwtSigningKey;
 
+    @Override
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
+    @Override
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    @Override
     public String generateTokenFromUsername(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -38,7 +41,9 @@ public class TokenProvider {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
-    public boolean validateJwtToken(String authToken) {
+    @Override
+    // Deprecated functions, use isTokenValid method in future
+    public boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSigningKey).parseClaimsJws(authToken);
             return true;
@@ -57,6 +62,7 @@ public class TokenProvider {
         return false;
     }
 
+    @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
