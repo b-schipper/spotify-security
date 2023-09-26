@@ -1,5 +1,7 @@
 package com.github.bschipper.spotifysecurity.security;
 
+import com.github.bschipper.spotifysecurity.security.service.AuthTokenServiceImpl;
+import com.github.bschipper.spotifysecurity.security.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +23,7 @@ import java.io.IOException;
 @Component
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
-    private TokenProvider jwtProvider;
+    private AuthTokenServiceImpl authTokenService;
     @Autowired private CustomUserDetailsService userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
@@ -33,8 +35,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && jwtProvider.validateJwtToken(jwt)) {
-                String username = jwtProvider.extractUserName(jwt);
+            if (jwt != null && authTokenService.validateToken(jwt)) {
+                String username = authTokenService.extractUserName(jwt);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
