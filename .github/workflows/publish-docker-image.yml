@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./spotify-security.Dockerfile
+          file: ./spotify-clone.Dockerfile
           push: true
           tags: |
             bschipper/spotify-security-spring-boot:latest
