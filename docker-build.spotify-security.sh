@@ -10,7 +10,6 @@ docker build \
     -f spotify-security.Dockerfile \
     -t "$IMAGE_TAG:$VERSION" .
 
-# workaround for skaffold; unused, as skaffold does not know about compute jobs
 if [ -n "$IMAGE" ]; then
     docker tag "$IMAGE_TAG:$VERSION" "$IMAGE"
 fi
