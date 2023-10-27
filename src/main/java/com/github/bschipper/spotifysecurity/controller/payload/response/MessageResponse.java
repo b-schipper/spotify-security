@@ -1,4 +1,4 @@
-package com.github.bschipper.spotifysecurity.payload.response;
+package com.github.bschipper.spotifysecurity.controller.payload.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

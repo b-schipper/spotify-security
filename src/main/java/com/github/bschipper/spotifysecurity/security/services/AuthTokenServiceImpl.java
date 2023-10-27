@@ -1,8 +1,9 @@
-package com.github.bschipper.spotifysecurity.security.service;
+package com.github.bschipper.spotifysecurity.security.services;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,15 +18,13 @@ import java.util.function.Function;
 
 @Service
 public class AuthTokenServiceImpl implements AuthTokenService {
-    private static final Logger logger = LoggerFactory.getLogger(AuthTokenServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthTokenServiceImpl.class);
 
-    @Value("413F4428472B4B6250655368566D5970337336763979244226452948404D6351")
+    @Value("${token.signing.key}")
     private String jwtSigningKey;
 
-    @Override
-    public String extractUserName(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
+    @Value("${token.signing.expiration}")
+    private int jwtExpirationMs;
 
     @Override
     public String generateToken(UserDetails userDetails) {
@@ -37,35 +36,19 @@ public class AuthTokenServiceImpl implements AuthTokenService {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + 60000))
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
     @Override
-    // Deprecated functions, use isTokenValid method in future
-    public boolean validateToken(String authToken) {
-        try {
-            Jwts.parser().setSigningKey(jwtSigningKey).parseClaimsJws(authToken);
-            return true;
-        } catch (SignatureException e) {
-            logger.error("Invalid JWT signature: {}", e.getMessage());
-        } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT token: {}", e.getMessage());
-        } catch (ExpiredJwtException e) {
-            logger.error("JWT token is expired: {}", e.getMessage());
-        } catch (UnsupportedJwtException e) {
-            logger.error("JWT token is unsupported: {}", e.getMessage());
-        } catch (IllegalArgumentException e) {
-            logger.error("JWT claims string is empty: {}", e.getMessage());
-        }
-
-        return false;
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {

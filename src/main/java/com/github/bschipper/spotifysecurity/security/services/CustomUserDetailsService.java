@@ -1,4 +1,4 @@
-package com.github.bschipper.spotifysecurity.security.service;
+package com.github.bschipper.spotifysecurity.security.services;
 
 import com.github.bschipper.spotifysecurity.models.User;
 import com.github.bschipper.spotifysecurity.repository.UserRepository;

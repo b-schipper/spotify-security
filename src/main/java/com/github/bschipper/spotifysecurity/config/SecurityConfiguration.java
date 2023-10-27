@@ -1,9 +1,9 @@
 package com.github.bschipper.spotifysecurity.config;
 
 
-import com.github.bschipper.spotifysecurity.security.service.CustomUserDetailsService;
+import com.github.bschipper.spotifysecurity.security.services.CustomUserDetailsService;
 import com.github.bschipper.spotifysecurity.security.RestAuthenticationEntryPoint;
-import com.github.bschipper.spotifysecurity.security.TokenAuthenticationFilter;
+import com.github.bschipper.spotifysecurity.security.AuthTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,12 +24,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
     private final CustomUserDetailsService userDetailsService;
-    private final TokenAuthenticationFilter tokenAuthenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,7 +57,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(handler -> handler
                         .authenticationEntryPoint(new RestAuthenticationEntryPoint()))
-                .authorizeHttpRequests(request -> request
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**")).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager
@@ -64,7 +65,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider());
 
         // Add custom token based authentication filter
-        http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
