@@ -1,0 +1,17 @@
+.github
+.idea
+.git
+.gitignore
+
+*/test
+target/
+
+README.md
+HELP.md
+
+docker-build.spotify-clone.sh
+spotify-clone.Dockerfile
+
+./mvnw
+mvnw.cmd
+.mvn
