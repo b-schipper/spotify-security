@@ -30,6 +30,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final CustomUserDetailsService userDetailsService;
+    private final AuthTokenFilter authTokenFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,7 +66,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider());
 
         // Add custom token based authentication filter
-        http.addFilterBefore(new AuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
