@@ -1,5 +1,6 @@
 package com.github.bschipper.spotifysecurity.security.services;
 
+import com.github.bschipper.spotifysecurity.controller.payload.response.MessageResponse;
 import com.github.bschipper.spotifysecurity.models.ERole;
 import com.github.bschipper.spotifysecurity.models.Role;
 import com.github.bschipper.spotifysecurity.exception.BadRequestException;
@@ -56,7 +57,7 @@ public class AuthenticationService {
         );
     }
 
-    public JwtResponse registerUser(String username, String email, String password, ERole role) {
+    public MessageResponse registerUser(String username, String email, String password, ERole role) {
         if (userRepository.existsByUsername(username)) {
             throw new BadRequestException("Username is already in use");
         }
@@ -87,7 +88,7 @@ public class AuthenticationService {
         }
         userRepository.save(user);
 
-        return authenticateUser(username, password);
+        return new MessageResponse("User successfully registered");
     }
 
     public void logoutUser(Long userId) {

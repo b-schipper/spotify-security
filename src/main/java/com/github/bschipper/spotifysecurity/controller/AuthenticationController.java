@@ -11,8 +11,10 @@ import com.github.bschipper.spotifysecurity.controller.payload.response.MessageR
 import com.github.bschipper.spotifysecurity.security.CurrentUser;
 import com.github.bschipper.spotifysecurity.security.UserPrincipal;
 import com.github.bschipper.spotifysecurity.security.services.RefreshTokenService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +36,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<JwtResponse> registerUser(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest request) {
         return ResponseEntity.ok(authenticationService.registerUser(
                 request.getUsername(), request.getEmail(), request.getPassword(), ERole.ROLE_USER));
     }
 
     @PostMapping("/signup/artist")
-    public ResponseEntity<JwtResponse> registerArtist(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<MessageResponse> registerArtist(@Valid @RequestBody SignupRequest request) {
         return ResponseEntity.ok(authenticationService.registerUser(
                 request.getUsername(), request.getEmail(), request.getPassword(), ERole.ROLE_ARTIST));
     }

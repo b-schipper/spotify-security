@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(handler -> handler
                         .authenticationEntryPoint(new RestAuthenticationEntryPoint()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager
                         .sessionCreationPolicy(STATELESS))
