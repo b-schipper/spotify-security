@@ -1,9 +1,11 @@
-package com.github.bschipper.spotifysecurity.payload.response;
+package com.github.bschipper.spotifysecurity.controller.payload.response;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Builder
 @RequiredArgsConstructor
@@ -16,5 +18,5 @@ public class JwtResponse {
     private final Long id;
     private final String username;
     private final String email;
-    //private final List<String> roles;
+    private final List<String> roles;
 }

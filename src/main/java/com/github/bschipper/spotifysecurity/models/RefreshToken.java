@@ -1,15 +1,17 @@
 package com.github.bschipper.spotifysecurity.models;
 
+import com.github.bschipper.spotifysecurity.models.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
 
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "refreshtoken")
 public class RefreshToken {
     @Id

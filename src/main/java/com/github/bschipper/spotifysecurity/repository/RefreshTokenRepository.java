@@ -1,7 +1,7 @@
 package com.github.bschipper.spotifysecurity.repository;
 
-import com.github.bschipper.spotifysecurity.models.RefreshToken;
 import com.github.bschipper.spotifysecurity.models.User;
+import com.github.bschipper.spotifysecurity.models.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
