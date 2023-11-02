@@ -28,7 +28,7 @@ import java.util.Set;
 public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder encoder;
-    private final AuthTokenService authTokenService;
+    private final JwtUtil jwtUtil;
     private final RefreshTokenService refreshTokenService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -41,7 +41,7 @@ public class AuthenticationService {
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
-        String jwt = authTokenService.generateToken(userPrincipal);
+        String jwt = jwtUtil.generateToken(userPrincipal);
 
         List<String> roles = userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 

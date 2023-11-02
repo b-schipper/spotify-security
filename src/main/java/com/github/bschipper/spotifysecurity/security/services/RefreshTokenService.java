@@ -6,7 +6,6 @@ import com.github.bschipper.spotifysecurity.models.RefreshToken;
 import com.github.bschipper.spotifysecurity.repository.UserRepository;
 import com.github.bschipper.spotifysecurity.repository.RefreshTokenRepository;
 import com.github.bschipper.spotifysecurity.security.UserPrincipal;
-import com.github.bschipper.spotifysecurity.security.services.AuthTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class RefreshTokenService {
     @Value("${token.refresh.expiration}")
     private Long refreshTokenDurationMs;
 
-    private final AuthTokenService authTokenService;
+    private final JwtUtil jwtUtil;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
 
@@ -30,7 +29,7 @@ public class RefreshTokenService {
                 .map(this::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(user -> {
-                    String token = authTokenService.generateToken(UserPrincipal.create(user));
+                    String token = jwtUtil.generateToken(UserPrincipal.create(user));
                     return new TokenRefreshResponse(token, requestRefreshToken);
                 })
                 .orElseThrow(() ->

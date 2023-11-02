@@ -1,6 +1,6 @@
 package com.github.bschipper.spotifysecurity.security;
 
-import com.github.bschipper.spotifysecurity.security.services.AuthTokenServiceImpl;
+import com.github.bschipper.spotifysecurity.security.services.JwtUtil;
 import com.github.bschipper.spotifysecurity.security.services.CustomUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -28,7 +28,7 @@ import java.io.IOException;
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
-    private AuthTokenServiceImpl authTokenService;
+    private JwtUtil jwtUtil;
     @Autowired private CustomUserDetailsService userDetailsService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthTokenFilter.class);
@@ -40,11 +40,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            String username = authTokenService.extractUsername(jwt);
+            String username = jwtUtil.extractUsername(jwt);
             if (StringUtils.hasText(username)
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                if (authTokenService.isTokenValid(jwt, userDetails)) {
+                if (jwtUtil.isTokenValid(jwt, userDetails)) {
                     SecurityContext context = SecurityContextHolder.createEmptyContext();
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
