@@ -3,11 +3,15 @@ package com.github.bschipper.spotifysecurity.models;
 import com.github.bschipper.spotifysecurity.models.ERole;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -17,5 +21,5 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ERole name;
+    private final ERole name;
 }

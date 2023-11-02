@@ -1,5 +1,6 @@
 package com.github.bschipper.spotifysecurity.security.services;
 
+import com.github.bschipper.spotifysecurity.models.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -14,6 +15,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 @Service
@@ -57,9 +59,12 @@ public class AuthTokenServiceImpl implements AuthTokenService {
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        System.out.println(userDetails.getAuthorities().toString());
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
+                .setIssuer("SpotifyClone")
+                //.claim("roles", userDetails.getAuthorities().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();

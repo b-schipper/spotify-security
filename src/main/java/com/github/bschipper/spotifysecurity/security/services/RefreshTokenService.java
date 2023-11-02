@@ -5,6 +5,7 @@ import com.github.bschipper.spotifysecurity.controller.payload.response.TokenRef
 import com.github.bschipper.spotifysecurity.models.RefreshToken;
 import com.github.bschipper.spotifysecurity.repository.UserRepository;
 import com.github.bschipper.spotifysecurity.repository.RefreshTokenRepository;
+import com.github.bschipper.spotifysecurity.security.UserPrincipal;
 import com.github.bschipper.spotifysecurity.security.services.AuthTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,7 @@ public class RefreshTokenService {
                 .map(this::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(user -> {
-                    String token = authTokenService.generateTokenFromUsername(user.getUsername());
+                    String token = authTokenService.generateToken(UserPrincipal.create(user));
                     return new TokenRefreshResponse(token, requestRefreshToken);
                 })
                 .orElseThrow(() ->

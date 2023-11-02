@@ -64,6 +64,13 @@ public class AuthenticationService {
             throw new BadRequestException("Email address is already in use");
         }
 
+        if (!roleRepository.existsById(1L)) {
+            Role admin = new Role(ERole.ROLE_ADMIN);
+            Role userr = new Role(ERole.ROLE_USER);
+            Role artist = new Role(ERole.ROLE_ARTIST);
+            roleRepository.saveAll(List.of(admin, userr, artist));
+        }
+
         // Create new user's account
         User user = new User(username, email, encoder.encode(password));
         Set<Role> roles = new HashSet<>();
