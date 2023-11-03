@@ -90,8 +90,4 @@ public class AuthenticationService {
 
         return new MessageResponse("User successfully registered");
     }
-
-    public void logoutUser(Long userId) {
-        refreshTokenService.deleteByUserId(userId);
-    }
 }
