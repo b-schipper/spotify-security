@@ -37,13 +37,13 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest request) {
-        return ResponseEntity.ok(authenticationService.registerUser(
+        return ResponseEntity.status(201).body(authenticationService.registerUser(
                 request.getUsername(), request.getEmail(), request.getPassword(), ERole.ROLE_USER));
     }
 
     @PostMapping("/signup/artist")
     public ResponseEntity<MessageResponse> registerArtist(@Valid @RequestBody SignupRequest request) {
-        return ResponseEntity.ok(authenticationService.registerUser(
+        return ResponseEntity.status(201).body(authenticationService.registerUser(
                 request.getUsername(), request.getEmail(), request.getPassword(), ERole.ROLE_ARTIST));
     }
 
@@ -54,7 +54,7 @@ public class AuthenticationController {
 
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser(@CurrentUser UserPrincipal userPrincipal) {
-        authenticationService.logoutUser(userPrincipal.getId());
+        refreshTokenService.deleteByUserId(userPrincipal.getId());
         return ResponseEntity.ok(new MessageResponse("Log out successful!"));
     }
 }
