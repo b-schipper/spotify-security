@@ -1,6 +1,6 @@
 package com.github.bschipper.spotifysecurity.security;
 
-import com.github.bschipper.spotifysecurity.models.User;
+import com.github.bschipper.spotifysecurity.features.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

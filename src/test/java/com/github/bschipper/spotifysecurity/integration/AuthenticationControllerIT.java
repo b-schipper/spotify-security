@@ -1,11 +1,11 @@
 package com.github.bschipper.spotifysecurity.integration;
 
-import com.github.bschipper.spotifysecurity.controller.payload.request.SigninRequest;
-import com.github.bschipper.spotifysecurity.controller.payload.request.SignupRequest;
-import com.github.bschipper.spotifysecurity.models.ERole;
-import com.github.bschipper.spotifysecurity.models.Role;
-import com.github.bschipper.spotifysecurity.repository.RoleRepository;
-import com.github.bschipper.spotifysecurity.repository.UserRepository;
+import com.github.bschipper.spotifysecurity.features.authentication.request.SigninRequest;
+import com.github.bschipper.spotifysecurity.features.authentication.request.SignupRequest;
+import com.github.bschipper.spotifysecurity.features.authentication.ERole;
+import com.github.bschipper.spotifysecurity.features.authentication.Role;
+import com.github.bschipper.spotifysecurity.features.authentication.RoleRepository;
+import com.github.bschipper.spotifysecurity.features.user.UserRepository;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;

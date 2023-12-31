@@ -1,12 +1,11 @@
 
-name: Publish Docker Image
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
+name: Publish Docker Image
 jobs:
   push-to-registry:
     name: Publish Docker image to Docker Hub

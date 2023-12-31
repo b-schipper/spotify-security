@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,8 +39,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
+        final String headerAuth = request.getHeader("Authorization");
+
+        if (headerAuth == null || !headerAuth.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         try {
-            String jwt = parseJwt(request);
+            String jwt = headerAuth.substring(7);
             String username = jwtUtil.extractUsername(jwt);
             if (StringUtils.hasText(username)
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -53,16 +60,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.setContext(context);
                 }
             }
-        } catch (SignatureException e) {
-            LOGGER.error("Invalid JWT signature: {}", e.getMessage());
-        } catch (MalformedJwtException e) {
-            LOGGER.error("Invalid JWT token: {}", e.getMessage());
+        } catch (AuthenticationException e) {
+            LOGGER.error(e.getMessage());
         } catch (ExpiredJwtException e) {
             LOGGER.error("JWT token is expired: {}", e.getMessage());
-        } catch (UnsupportedJwtException e) {
-            LOGGER.error("JWT token is unsupported: {}", e.getMessage());
-        } catch (IllegalArgumentException e) {
-            LOGGER.error("JWT claims string is empty: {}", e.getMessage());
         }
 
         filterChain.doFilter(request, response);
