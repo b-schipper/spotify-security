@@ -3,8 +3,6 @@ package com.github.bschipper.spotifysecurity.security.services;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,6 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtil {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
 
     @Value("${token.signing.key}")
     private String jwtSigningKey;

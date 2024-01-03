@@ -1,8 +1,8 @@
 package com.github.bschipper.spotifysecurity.unit;
 
-import com.github.bschipper.spotifysecurity.models.ERole;
-import com.github.bschipper.spotifysecurity.models.Role;
-import com.github.bschipper.spotifysecurity.repository.RoleRepository;
+import com.github.bschipper.spotifysecurity.features.authentication.ERole;
+import com.github.bschipper.spotifysecurity.features.authentication.Role;
+import com.github.bschipper.spotifysecurity.features.authentication.RoleRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

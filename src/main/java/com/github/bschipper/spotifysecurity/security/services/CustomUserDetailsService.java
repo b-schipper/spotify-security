@@ -1,7 +1,7 @@
 package com.github.bschipper.spotifysecurity.security.services;
 
-import com.github.bschipper.spotifysecurity.models.User;
-import com.github.bschipper.spotifysecurity.repository.UserRepository;
+import com.github.bschipper.spotifysecurity.features.user.User;
+import com.github.bschipper.spotifysecurity.features.user.UserRepository;
 import com.github.bschipper.spotifysecurity.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
