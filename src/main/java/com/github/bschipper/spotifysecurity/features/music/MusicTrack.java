@@ -1,14 +1,16 @@
-package com.github.bschipper.spotifysecurity.features.musictrack;
+package com.github.bschipper.spotifysecurity.features.music;
 
 import com.github.bschipper.spotifysecurity.features.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "musictracks")
 public class MusicTrack {
 
@@ -26,7 +28,7 @@ public class MusicTrack {
     private Image image;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "artist_id", referencedColumnName = "id")
     private User artist;
 
     @ManyToMany(fetch = FetchType.LAZY)

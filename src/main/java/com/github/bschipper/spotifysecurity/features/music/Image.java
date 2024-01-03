@@ -1,4 +1,4 @@
-package com.github.bschipper.spotifysecurity.features.musictrack;
+package com.github.bschipper.spotifysecurity.features.music;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

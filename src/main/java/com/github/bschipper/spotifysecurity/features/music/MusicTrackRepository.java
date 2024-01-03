@@ -1,6 +1,5 @@
-package com.github.bschipper.spotifysecurity.features.musictrack;
+package com.github.bschipper.spotifysecurity.features.music;
 
-import com.github.bschipper.spotifysecurity.features.musictrack.MusicTrack;
 import com.github.bschipper.spotifysecurity.features.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

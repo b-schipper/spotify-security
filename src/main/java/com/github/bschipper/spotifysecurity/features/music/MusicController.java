@@ -1,6 +1,6 @@
-package com.github.bschipper.spotifysecurity.features.musictrack;
+package com.github.bschipper.spotifysecurity.features.music;
 
-import com.github.bschipper.spotifysecurity.features.musictrack.response.MusicTrackResponse;
+import com.github.bschipper.spotifysecurity.features.music.response.MusicTrackResponse;
 import com.github.bschipper.spotifysecurity.security.CurrentUser;
 import com.github.bschipper.spotifysecurity.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;

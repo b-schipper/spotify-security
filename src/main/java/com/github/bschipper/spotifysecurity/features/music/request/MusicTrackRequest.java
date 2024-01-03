@@ -1,4 +1,4 @@
-package com.github.bschipper.spotifysecurity.features.musictrack.request;
+package com.github.bschipper.spotifysecurity.features.music.request;
 
 import lombok.Getter;
 import lombok.Setter;

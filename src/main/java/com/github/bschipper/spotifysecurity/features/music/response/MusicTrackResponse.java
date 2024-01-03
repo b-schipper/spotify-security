@@ -1,12 +1,12 @@
-package com.github.bschipper.spotifysecurity.features.musictrack.response;
+package com.github.bschipper.spotifysecurity.features.music.response;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class MusicTrackResponse {
     private Long id;
     private String title;

@@ -2,7 +2,7 @@ package com.github.bschipper.spotifysecurity.features.portal;
 
 import com.github.bschipper.spotifysecurity.features.authentication.ERole;
 import com.github.bschipper.spotifysecurity.features.authentication.RoleRepository;
-import com.github.bschipper.spotifysecurity.features.musictrack.MusicTrackRepository;
+import com.github.bschipper.spotifysecurity.features.music.MusicTrackRepository;
 import com.github.bschipper.spotifysecurity.features.portal.response.MetricsResponse;
 import com.github.bschipper.spotifysecurity.features.user.UserRepository;
 import lombok.RequiredArgsConstructor;
